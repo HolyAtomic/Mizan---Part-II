@@ -1,28 +1,47 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mizan</title>
-      <script type="module" crossorigin src="/assets/index--9JV7oe-.js"></script>
-      <link rel="stylesheet" crossorigin href="/assets/index-CvwuXAtN.css">
-    </head>
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mizan | Al Andalous</title>
+
+  <script type="module" crossorigin src="/assets/index-CM2cG9aa.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-B27IxbpJ.css">
+</head>
+
 <body class="bg-gray-50 text-slate-900">
 
     <!-- Navbar -->
     <header class="bg-slate-900 text-white">
-            <a href="index.html" class="px-5 py-4 flex justify-center items-center gap-3">
-                <img src="/assets/budget-balance-CxV3d6R4.png" alt="mizan" class="h-10 w-10">
-                <h1 class="text-2xl font-bold text-yellow-1400">Mizan</h1>
+        <div class="max-w-6xl mx-auto px-5 py-4 flex justify-between items-center">
+
+            <a href="index.html" class="flex items-center gap-3 justify-center">
+                <img src="/assets/budget-balance-CxV3d6R4.png"
+                     alt="Mizan"
+                     class="h-10 w-10">
+
+                <h1 class="text-2xl font-bold text-yellow-400">
+                    Mizan
+                </h1>
             </a>
+
+            <div class="flex items-center gap-3">
+                <button id="theme-btn"
+                    type="button"
+                    class="border border-slate-600 rounded-lg px-3 py-2">
+                    Changer le thème
+                </button>
+            </div>
+
+        </div>
     </header>
 
 
     <main class="max-w-6xl mx-auto px-5 py-10">
 
-        <!-- Accueil -->
+        <!-- Dashboard -->
         <section id="accueil">
 
             <div class="flex flex-col md:flex-row justify-between gap-5 mb-8">
@@ -40,14 +59,14 @@
                 <div class="flex gap-3">
 
                     <select id="currency"
-                        class="border border-gray-300 rounded-lg px-4 py-2 mt-6 bg-white">
+                        class="border rounded-lg px-4 py-2 mt-5 bg-white">
                         <option value="MAD">MAD</option>
                         <option value="USD">USD</option>
                         <option value="EUR">EUR</option>
                     </select>
 
                     <button id="refresh-btn"
-                        class="bg-slate-900 text-white px-2 py-2 mt-6 rounded-lg hover:bg-slate-700">
+                        class="bg-slate-900 text-white px-2 py-2 mt-5 rounded-lg hover:bg-slate-700">
                         Actualiser
                     </button>
 
@@ -55,8 +74,6 @@
 
             </div>
 
-
-            <!-- Status -->
             <div id="request-status"
                 role="status"
                 aria-live="polite"
@@ -70,21 +87,16 @@
 
                 <p id="error-text"></p>
 
-                <button id="retry-btn" class="underline font-bold mt-2">
+                <button id="retry-btn"
+                    class="underline font-bold mt-2">
                     Réessayer
                 </button>
 
             </div>
 
-
-            <!-- Price Cards -->
             <div id="price-cards"
                 class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-                <!-- Les cartes seront ajoutées avec JavaScript -->
-
             </div>
-
 
             <p class="text-gray-500 text-sm mt-5">
                 Dernière mise à jour :
@@ -92,6 +104,349 @@
             </p>
 
         </section>
+
+
+        <!-- Catalogue -->
+        <section id="catalogue" class="mt-14">
+
+            <div class="flex flex-col md:flex-row justify-between gap-4 mb-6">
+
+                <div>
+                    <h2 class="text-3xl font-bold">
+                        Gestion du catalogue
+                    </h2>
+
+                    <p class="text-gray-500 mt-2">
+                        Gérez vos bijoux, lingots et pièces.
+                    </p>
+                </div>
+
+                <button id="add-product-btn"
+                    type="button"
+                    class="bg-slate-900 text-white px-2 py-2 mt-5 rounded-lg hover:bg-slate-700">
+                    + Ajouter un article
+                </button>
+
+            </div>
+
+
+            <!-- Catalog status -->
+            <div id="catalog-status"
+                role="status"
+                aria-live="polite"
+                class="text-gray-500 mb-4">
+                Chargement du catalogue...
+            </div>
+
+
+            <!-- Search and filters -->
+            <div class="bg-white rounded-xl shadow-sm p-5 mb-6">
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+                    <div class="md:col-span-2">
+                        <label for="search-input"
+                            class="block mb-2 font-medium">
+                            Rechercher
+                        </label>
+
+                        <input id="search-input"
+                            type="search"
+                            placeholder="Rechercher un article..."
+                            class="w-full border rounded-lg p-3">
+                    </div>
+
+
+                    <div>
+                        <label for="status-filter"
+                            class="block mb-2 font-medium">
+                            Statut
+                        </label>
+
+                        <select id="status-filter"
+                            class="w-full border rounded-lg p-3 bg-white">
+
+                            <option value="all">Tous</option>
+                            <option value="available">Disponible</option>
+                            <option value="reserved">Réservé</option>
+                            <option value="sold">Vendu</option>
+
+                        </select>
+                    </div>
+
+
+                    <div>
+                        <label for="sort-select"
+                            class="block mb-2 font-medium">
+                            Trier par
+                        </label>
+
+                        <select id="sort-select"
+                            class="w-full border rounded-lg p-3 bg-white">
+
+                            <option value="title">Titre</option>
+                            <option value="price">Prix</option>
+                            <option value="date">Date</option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-wrap gap-4 mt-5">
+
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" id="favorites-filter">
+                        Favoris uniquement
+                    </label>
+
+                    <button id="reset-filters-btn"
+                        type="button"
+                        class="text-blue-600 underline">
+                        Réinitialiser les filtres
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Catalog error -->
+            <div id="catalog-error"
+                role="alert"
+                class="hidden bg-red-100 text-red-700 p-4 rounded-lg mb-5">
+
+                <p id="catalog-error-text"></p>
+
+                <button id="catalog-retry-btn"
+                    type="button"
+                    class="underline font-bold mt-2">
+                    Réessayer
+                </button>
+
+            </div>
+
+
+            <!-- Products -->
+            <div id="products-list"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                <!-- Products generated with JavaScript -->
+
+            </div>
+
+
+            <!-- Empty state -->
+            <div id="catalog-empty"
+                class="hidden text-center bg-white rounded-xl p-10">
+
+                <h3 class="text-xl font-bold">
+                    Aucun article trouvé
+                </h3>
+
+                <p class="text-gray-500 mt-2">
+                    Essayez de modifier vos filtres.
+                </p>
+
+                <button id="empty-reset-btn"
+                    type="button"
+                    class="text-blue-600 underline mt-4">
+                    Réinitialiser les filtres
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Product Form Modal -->
+        <section id="product-modal"
+            class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-5">
+
+            <div class="bg-white rounded-xl shadow-xl w-full max-w-lg p-6">
+
+                <div class="flex justify-between items-center mb-6">
+
+                    <h2 id="product-modal-title"
+                        class="text-2xl font-bold">
+                        Ajouter un article
+                    </h2>
+
+                    <button id="close-product-modal"
+                        type="button"
+                        aria-label="Fermer">
+                        ✕
+                    </button>
+
+                </div>
+
+
+                <form id="product-form" class="space-y-4">
+
+                    <input type="hidden" id="product-id">
+
+                    <div>
+                        <label for="product-title"
+                            class="block mb-2 font-medium">
+                            Titre
+                        </label>
+
+                        <input id="product-title"
+                            type="text"
+                            minlength="3"
+                            maxlength="80"
+                            required
+                            class="w-full border rounded-lg p-3"
+                            placeholder="Ex: Bague en or 18K">
+
+                        <p id="title-error"
+                            class="text-red-600 text-sm mt-1"></p>
+                    </div>
+
+
+                    <div>
+                        <label for="product-description"
+                            class="block mb-2 font-medium">
+                            Description
+                        </label>
+
+                        <textarea id="product-description"
+                            minlength="10"
+                            required
+                            rows="3"
+                            class="w-full border rounded-lg p-3"
+                            placeholder="Description de l'article..."></textarea>
+
+                        <p id="description-error"
+                            class="text-red-600 text-sm mt-1"></p>
+                    </div>
+
+
+                    <div>
+                        <label for="product-price"
+                            class="block mb-2 font-medium">
+                            Prix
+                        </label>
+
+                        <input id="product-price"
+                            type="number"
+                            min="0.01"
+                            step="any"
+                            required
+                            class="w-full border rounded-lg p-3"
+                            placeholder="Ex: 2500">
+
+                        <p id="price-error"
+                            class="text-red-600 text-sm mt-1"></p>
+                    </div>
+
+
+                    <div>
+                        <label for="product-type"
+                            class="block mb-2 font-medium">
+                            Type
+                        </label>
+
+                        <select id="product-type"
+                            class="w-full border rounded-lg p-3 bg-white">
+
+                            <option value="bijou">Bijou</option>
+                            <option value="lingot">Lingot</option>
+                            <option value="piece">Pièce</option>
+
+                        </select>
+                    </div>
+
+
+                    <div>
+                        <label for="product-status"
+                            class="block mb-2 font-medium">
+                            Statut
+                        </label>
+
+                        <select id="product-status"
+                            class="w-full border rounded-lg p-3 bg-white">
+
+                            <option value="available">Disponible</option>
+                            <option value="reserved">Réservé</option>
+                            <option value="sold">Vendu</option>
+
+                        </select>
+                    </div>
+
+
+                    <div id="form-error"
+                        role="alert"
+                        class="hidden bg-red-100 text-red-700 p-3 rounded-lg">
+                    </div>
+
+
+                    <div class="flex gap-3 pt-3">
+
+                        <button id="save-product-btn"
+                            type="submit"
+                            class="flex-1 bg-slate-900 text-white p-3 rounded-lg">
+                            Enregistrer
+                        </button>
+
+                        <button id="cancel-product-btn"
+                            type="button"
+                            class="flex-1 border p-3 rounded-lg">
+                            Annuler
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- Delete Confirmation Modal -->
+        <section id="delete-modal"
+            class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-5">
+
+            <div class="bg-white rounded-xl p-6 max-w-md w-full shadow-xl">
+
+                <h2 class="text-xl font-bold">
+                    Confirmer la suppression
+                </h2>
+
+                <p id="delete-message"
+                    class="text-gray-500 mt-3">
+                    Voulez-vous vraiment supprimer cet article ?
+                </p>
+
+                <div class="flex gap-3 mt-6">
+
+                    <button id="confirm-delete-btn"
+                        type="button"
+                        class="flex-1 bg-red-600 text-white p-3 rounded-lg">
+                        Supprimer
+                    </button>
+
+                    <button id="cancel-delete-btn"
+                        type="button"
+                        class="flex-1 border p-3 rounded-lg">
+                        Annuler
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Notifications -->
+        <div id="notification"
+            role="status"
+            aria-live="polite"
+            class="hidden fixed bottom-5 right-5 z-[60] bg-slate-900 text-white p-4 rounded-lg shadow-lg">
+        </div>
 
 
         <!-- Historique -->
@@ -106,26 +461,32 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
 
                     <div>
-                        <label for="history-metal" class="block mb-2">
+                        <label for="history-metal"
+                            class="block mb-2">
                             Choisir un métal
                         </label>
 
                         <select id="history-metal"
                             class="w-full border rounded-lg p-3 bg-white">
+
                             <option value="XAU">Gold (XAU)</option>
                             <option value="XAG">Silver (XAG)</option>
+
                         </select>
                     </div>
 
                     <div>
-                        <label for="history-period" class="block mb-2">
+                        <label for="history-period"
+                            class="block mb-2">
                             Choisir une période
                         </label>
 
                         <select id="history-period"
                             class="w-full border rounded-lg p-3 bg-white">
+
                             <option value="7">7 derniers jours</option>
                             <option value="30">30 derniers jours</option>
+
                         </select>
                     </div>
 
@@ -173,7 +534,6 @@
                         </select>
                     </div>
 
-
                     <div>
                         <label for="weight" class="block mb-2">
                             Poids en grammes
@@ -192,17 +552,13 @@
                         </p>
                     </div>
 
-
                     <button type="submit"
                         id="calculate-btn"
-                        class="w-full bg-slate-900 text-white p-3 rounded-lg hover:bg-slate-700">
-
+                        class="w-full bg-slate-900 text-white p-3 rounded-lg">
                         Estimer la valeur
-
                     </button>
 
                 </form>
-
 
                 <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-5 mt-6">
 
@@ -223,32 +579,52 @@
         </section>
 
 
-        <!-- Journal -->
-        <section id="journal" class="mt-10 mb-8">
+        <!-- Network Panel -->
+        <section id="journal" class="mt-14 mb-8">
 
-            <h2 class="text-2xl font-bold mb-4">
-                Journal des requêtes
-            </h2>
+            <div class="bg-white rounded-xl shadow-sm p-6">
 
-            <div class="bg-white rounded-lg p-4 shadow">
+                <button id="network-toggle-btn"
+                    type="button"
+                    class="w-full flex justify-between items-center text-left">
 
-                <table class="w-full text-left">
+                    <h2 class="text-2xl font-bold">
+                        Journal des requêtes réseau
+                    </h2>
 
-                    <tr>
-                        <th class="p-2">Méthode</th>
-                        <th class="p-2">URL</th>
-                        <th class="p-2">Statut</th>
-                        <th class="p-2">Durée</th>
-                    </tr>
+                    <span id="network-toggle-icon">−</span>
 
-                    <tbody id="request-log">
-                    </tbody>
+                </button>
 
-                </table>
 
-                <p id="empty-log" class="text-gray-500 mt-4">
-                    Aucune requête enregistrée.
-                </p>
+                <div id="network-panel" class="mt-5">
+
+                    <div class="overflow-x-auto">
+
+                        <table class="w-full text-left">
+
+                            <thead>
+                                <tr>
+                                    <th class="p-3">Méthode</th>
+                                    <th class="p-3">URL</th>
+                                    <th class="p-3">Statut</th>
+                                    <th class="p-3">Durée</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="request-log">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <p id="empty-log"
+                        class="text-gray-500 mt-4">
+                        Aucune requête enregistrée.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -269,8 +645,6 @@
         </p>
 
     </footer>
-
-
 
 </body>
 </html>
