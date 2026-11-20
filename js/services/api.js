@@ -76,6 +76,11 @@ export async function getPrices(currency) {
     };
 }
 
+export async function getPrice(metal, currency) {
+    const pricesData = await getPrices(currency);
+    const priceInfo = pricesData.prices.find(p => p.symbol === metal);
+    return priceInfo;
+}
 
 export async function getHistory(metal, period, fxRate) {
     const symbol = metal === "XAU" ? "xau" : "silver";
