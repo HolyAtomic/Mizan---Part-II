@@ -11,12 +11,20 @@ export async function request(path, options = {}) {
 
     try {
 
-        const response = await fetch(API_URL + path, {
+        let url = API_URL + path;
+
+        // check if path rah full url
+        if (path.startsWith("http")) {
+            url = path;
+        }
+
+        const response = await fetch(url, {
 
             ...options,
 
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                ...options.headers
             },
 
             signal: controller.signal
@@ -24,7 +32,17 @@ export async function request(path, options = {}) {
         });
 
         if (!response.ok) {
-            throw new Error("HTTP_ERROR");
+
+            throw {
+                type: "http",
+                status: response.status,
+                message: "HTTP request failed"
+            };
+
+        }
+
+        if (response.status === 204) {
+            return null;
         }
 
         const data = await response.json();
@@ -33,11 +51,45 @@ export async function request(path, options = {}) {
 
     } catch (error) {
 
-        if (error.name === "AbortError") {
-            throw new Error("TIMEOUT");
+        if (error.type) {
+            throw error;
         }
 
-        throw error;
+        if (error.name === "AbortError") {
+
+            throw {
+                type: "timeout",
+                status: 0,
+                message: "Request timed out"
+            };
+
+        }
+
+        if (!navigator.onLine) {
+
+            throw {
+                type: "offline",
+                status: 0,
+                message: "No internet connection"
+            };
+
+        }
+
+        if (error instanceof SyntaxError) {
+
+            throw {
+                type: "parse",
+                status: 0,
+                message: "Invalid JSON response"
+            };
+
+        }
+
+        throw {
+            type: "network",
+            status: 0,
+            message: "Network error"
+        };
 
     } finally {
 
